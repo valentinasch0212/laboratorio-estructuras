@@ -27,8 +27,8 @@ def statisticdata():
     
     modadiurniou_nocturno=statistics.mode(screen1.Diurnio_Nocturno)
     modagravedad=statistics.mode(screen1.Gravedad)
-    datos[f"Lista {'Diurnio/Nocturno'}"]={'Moda':modadiurniou_nocturno, 'Mediana': 'No es posible de calcular', 'Media':'No es posible de calcular','Valor máximo':'No es posible de calcular','Valor mínimo': 'No es posible de calcular'}
-    datos[f"Lista {'Gravedad'}"]={'Moda':modagravedad, 'Mediana': 'No es posible de calcular', 'Media':'No es posible de calcular','Valor máximo':'No es posible de calcular','Valor mínimo': 'No es posible de calcular'}
+    datos[f"Lista {'Diurnio/Nocturno'}"]={'Moda':modadiurniou_nocturno, 'Mediana': 'N/A', 'Media':'N/A','Valor máximo':'N/A','Valor mínimo': 'N/A'}
+    datos[f"Lista {'Gravedad'}"]={'Moda':modagravedad, 'Mediana': 'N/A', 'Media':'N/A','Valor máximo':'N/A','Valor mínimo': 'N/A'}
     return datos
     print(datos)
 
