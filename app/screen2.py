@@ -14,26 +14,26 @@ import eel
 import screen1 
 
 @eel.expose
-def moda(lista):
-    mode=statistics.mode(lista)
-    return mode
-@eel.expose
-def mediana(lista):
-    median=statistics.median(lista)
-    return median
-@eel.expose
-def media(lista):
-    mean=statistics.mean(lista)
-    return mean
-@eel.expose
-def maximo(lista):
-    maximum=max(lista)
-    return maximum
-@eel.expose
-def minimo(lista):
-    minimum=min(lista)
-    return minimum
+def statisticdata():
+    datos={}
+    lists=[('Peaton', screen1.Peaton), ('Automovil', screen1.Automovil), ('Campaero', screen1.Campaero), ('Camioneta', screen1.Camioneta), ('Micro', screen1.Micro), ('Buseta', screen1.Buseta), ('Bus', screen1.Bus), ('Camion', screen1.Camion), ('Volqueta', screen1.Volqueta), ('Moto', screen1.Moto), ('Bicicleta', screen1.Bicicleta)]
+    for i, lista in lists:
+        moda=statistics.mode(lista)
+        mediana=statistics.median(lista)
+        media=statistics.mean(lista)
+        maximum=max(lista)
+        minimum=min(lista)
+        datos[f'Lista {i}']={'Moda':moda,'Mediana':mediana,'Media':media, 'Valor máximo':maximum, 'Valor mínimo':minimum}
+    
+    modadiurniou_nocturno=statistics.mode(screen1.Diurnio_Nocturno)
+    modagravedad=statistics.mode(screen1.Gravedad)
+    datos[f"Lista {'Diurnio/Nocturno'}"]={'Moda':modadiurniou_nocturno, 'Mediana': 'N/A', 'Media':'N/A','Valor máximo':'N/A','Valor mínimo': 'N/A'}
+    datos[f"Lista {'Gravedad'}"]={'Moda':modagravedad, 'Mediana': 'N/A', 'Media':'N/A','Valor máximo':'N/A','Valor mínimo': 'N/A'}
+    return datos
+    #print(datos)
 
 
+#datosestadisticos=statisticdata()
 
-
+#Solo se calcula la moda de las listas de Diurnio/Nocturno y gravedad porque son listas que no contienen
+#datos númericos para hacer los otros cálculos como media, mediana, etc.

@@ -1,13 +1,15 @@
 #getTable(start: int, end: int): int[][] -> obtener matriz que representa la tabla principal
 #deleteRecord(orden: int): void -> eliminar registro
 #addRecord(aquí irán las columnas que decidan que van a conformar la tabla principal): void -> Agregar registro
-#Pendiente: 3.	Imprimir la información de un dato específico solicitado por el usuario (con la información relacionada de las listas)
+#3.	Imprimir la información de un dato específico solicitado por el usuario (con la información relacionada de las listas)
 
 #Recomiendo haber creado ya la tabla con las nuevas columnas, etc, etc, antes de comenzar a crear las funciones
+import csv
 import pandas as pd
-import numpy as np
 import eel
-df=pd.read_csv('https://www.datos.gov.co/api/views/7cci-nqqb/rows.csv?accessType=DOWNLOAD')
+import numpy as np
+#Se crea la tabla principal con el archivo
+df=pd.read_csv('app/datos.csv',delimiter=';', header=0)
 #Variables independientes
 Peaton= df['PEATON'].to_list()
 Automovil=df['AUTOMOVIL'].to_list()
@@ -23,29 +25,44 @@ Bicicleta=df['BICICLETA'].to_list()
 Diurnio_Nocturno=df['DIURNIO/NOCTURNO'].to_list()
 #Variables dependientes
 Gravedad=df['GRAVEDAD'].to_list()
+df_new=df[["ORDEN","PEATON","AUTOMOVIL","CAMPAERO","CAMIONETA","MICRO","BUSETA","BUS","CAMION","VOLQUETA","MOTO","BICICLETA","DIURNIO/NOCTURNO","GRAVEDAD"]]
 
-#Función que crea matriz que representa la tabla principal
+
 @eel.expose
-def gettable(peaton, automovil, campaero, camioneta, micro, buseta, bus, camion, volqueta, moto, bicicleta, diurnio_nocturno, gravedad):
-    table=np.array(list(zip(peaton, automovil, campaero, camioneta, micro, buseta,bus, camion,volqueta, moto,bicicleta, diurnio_nocturno,gravedad)))
-    return table
+def gettable(start: int, end: int, data):
+    new=data.loc[data['ORDEN'].between(start,end)]
+    new.columns=['']*len(new.columns)
+    matriz=new.values
+    return matriz
 
-#tabla= gettable(Peaton,Automovil, Campaero,Camioneta,Micro,Buseta,Bus,Camion,Volqueta,Moto,Bicicleta,Diurnio_Nocturno,Gravedad)
+#tabla=gettable(10,20, df_new)
 #print(tabla)
-#Eliminar registro
+
 @eel.expose
-def deleteRecord(datos, f):
-    newtable=np.delete(datos,f, axis=0)
-    return newtable
+def deleteRecord(orden: int, data):
+    new=data.loc[data['ORDEN']!=orden]
+    new=new.reset_index(drop=True)
+    new.columns=['']*len(new.columns)
+    matriz=new.values
+    return matriz
 
-
-#eliminar=deleteRecord(tabla,0)
-
-#Añadir registro
+#delete=deleteRecord(2,df_new) 
+#print(delete)  
 @eel.expose
-def addRecord(datos, newrecord):
-    newtable=np.vstack((datos,newrecord))
-    return newtable 
+def addrecord(data, newrecord):
+    nuevo=pd.DataFrame([newrecord],columns=data.columns)
+    newdf=pd.concat([data,nuevo],ignore_index=True)
+    newdf.columns=['']*len(newdf.columns)
+    matriz=newdf.values
+    return matriz
 
-#new=addRecord(tabla,[1,1,1,1,1,1,1,1,1,1,1,'Diurno','Con Heridos'])
+#new=addrecord(df_new,[df_new['ORDEN'].max()+1,1,1,1,1,1,1,1,1,1,1,1,'Diurno','Con muertos'])
 #print(new)
+
+@eel.expose
+def printrecord(data, orden:int):
+    selectedrow=data.iloc[orden-1]
+    print(selectedrow)
+
+
+#call=printrecord(df_new, 7)
