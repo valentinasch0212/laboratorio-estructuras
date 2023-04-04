@@ -30,10 +30,13 @@ def statisticdata():
     datos[f"Lista {'Diurnio/Nocturno'}"]={'Moda':modadiurniou_nocturno, 'Mediana': 'N/A', 'Media':'N/A','Valor máximo':'N/A','Valor mínimo': 'N/A'}
     datos[f"Lista {'Gravedad'}"]={'Moda':modagravedad, 'Mediana': 'N/A', 'Media':'N/A','Valor máximo':'N/A','Valor mínimo': 'N/A'}
     return datos
-    #print(datos)
 
 
-#datosestadisticos=statisticdata()
+
+
+
+
+datosestadisticos=statisticdata()
 
 #Solo se calcula la moda de las listas de Diurnio/Nocturno y gravedad porque son listas que no contienen
 #datos númericos para hacer los otros cálculos como media, mediana, etc.
